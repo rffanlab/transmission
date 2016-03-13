@@ -18,7 +18,12 @@ if [[ $osrelease = '6' ]]; then
   yum install transmission transmission-daemon -y
   service transmission-daemon start
   service transmission-daemon stop
-#  sed -i "s///g"
+  pass=$(cat /var/lib/transmission/settings.json|grep 'rpc-password')
+  sed -i "s/\"rpc-authentication-required\": false,/\"rpc-authentication-required\": true,/g" /var/lib/transmission/settings.json
+  sed -i "s/\"rpc-username\": "",/\"rpc-username\": "$username",/g" /var/lib/transmission/settings.json
+  sed -i "s/$pass/\"rpc-password\": \"$password\",/g" /var/lib/transmission/settings.json
+  sed -i "s/\"rpc-whitelist-enabled\": true,/\"rpc-whitelist-enabled\": false,/g" /var/lib/transmission/settings.json
+  sed -i "s/\"rpc-enabled\": false,/\"rpc-enabled\": true,/g" /var/lib/transmission/settings.json
 elif [[ $osrelease = '5' ]]; then
   cd /etc/yum.repos.d/
   if [[ $dis = '64' ]]; then
@@ -29,4 +34,10 @@ elif [[ $osrelease = '5' ]]; then
   yum install transmission transmission-daemon -y
   service transmission-daemon start
   service transmission-daemon stop
+  pass=$(cat /var/lib/transmission/.config/transmission-daemon/settings.json|grep 'rpc-password')
+  sed -i "s/\"rpc-authentication-required\": false,/\"rpc-authentication-required\": true,/g" /var/lib/transmission/.config/transmission-daemon/settings.json
+  sed -i "s/\"rpc-username\": "",/\"rpc-username\": "$username",/g" /var/lib/transmission/.config/transmission-daemon/settings.json
+  sed -i "s/$pass/\"rpc-password\": \"$password\",/g" /var/lib/transmission/.config/transmission-daemon/settings.json
+  sed -i "s/\"rpc-whitelist-enabled\": true,/\"rpc-whitelist-enabled\": false,/g" /var/lib/transmission/.config/transmission-daemon/settings.json
+  sed -i "s/\"rpc-enabled\": false,/\"rpc-enabled\": true,/g" /var/lib/transmission/.config/transmission-daemon/settings.json
 fi
