@@ -20,7 +20,7 @@ if [[ $osrelease = '6' ]]; then
   service transmission-daemon stop
   pass=$(cat /var/lib/transmission/settings.json|grep 'rpc-password')
   sed -i "s/\"rpc-authentication-required\": false,/\"rpc-authentication-required\": true,/g" /var/lib/transmission/settings.json
-  sed -i "s/\"rpc-username\": "",/\"rpc-username\": "$username",/g" /var/lib/transmission/settings.json
+  sed -i "s/\"rpc-username\": "",/\"rpc-username\": \"$username\",/g" /var/lib/transmission/settings.json
   sed -i "s/$pass/\"rpc-password\": \"$password\",/g" /var/lib/transmission/settings.json
   sed -i "s/\"rpc-whitelist-enabled\": true,/\"rpc-whitelist-enabled\": false,/g" /var/lib/transmission/settings.json
   sed -i "s/\"rpc-enabled\": false,/\"rpc-enabled\": true,/g" /var/lib/transmission/settings.json
