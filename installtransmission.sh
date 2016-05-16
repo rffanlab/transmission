@@ -41,3 +41,5 @@ elif [[ $osrelease = '5' ]]; then
   sed -i "s/\"rpc-whitelist-enabled\": true,/\"rpc-whitelist-enabled\": false,/g" /var/lib/transmission/.config/transmission-daemon/settings.json
   sed -i "s/\"rpc-enabled\": false,/\"rpc-enabled\": true,/g" /var/lib/transmission/.config/transmission-daemon/settings.json
 fi
+service transmission-daemon start
+chkconfig transmission-daemon on
